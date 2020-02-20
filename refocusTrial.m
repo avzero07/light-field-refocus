@@ -70,4 +70,36 @@ subplot(4,4,16), imshow(lightField(:,:,:,16)), title("16");
 sgtitle("All Views from Frame-"+sFrame);
 %% Compute Refocused Image
 
+% Define Shift Matrix for Painter Scene
+shiftMat = zeros(4,4,2);
+shiftMat(:,:,1) = [100,-0.36,-97.19,-195.55;
+                   98.67,0,-96.18,-197.85;
+                   99.17,0.21,-98.33,-197;
+                   99.08,-1.22,-99.26,-198.36];
+shiftMat(:,:,2) = [98.28,98.14,98.07,97.35;
+                   -1.73,0,0.74,0.11;
+                   -99.93,-99.11,-101.12,-99.07;
+                   -197.68,-198.14,-198.89,-199.37];
+% Note: Multiply shiftMat(:,:,2) by -1 when Using
+%       Conventions are reversed for Imtranslate.
+               
+% Define Expression for Depth Parameter, d(z)
+z = 3.5;
+z0 = 100;   % Pre-Defined
+z1 = 1.63;  % Pre-Defined
+
+d = ((1/z)-(1/z0))/((1/z1)-(1/z0));
+
+% Run Loop
+temp = zeros(1088,2048,3);
+index = 0;
+for i=1:4
+    for j=1:4
+        index = index + 1;
+        temp = temp + double(imtranslate(lightField(:,:,:,index),[-1*d*shiftMat(i,j,1),-1*d*shiftMat(i,j,2)]));
+    end
+end
+
+temp = temp/16;
+figure, imshow(uint8(temp));
 %% Output
