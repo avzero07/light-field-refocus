@@ -1,5 +1,5 @@
 %% Light Field Refocus
-% Trial Script
+% Main Script
 % @author   - Akshay Viswakumar
 % @email    - akshay.viswakumar@gmail.com
 % @version  - v0.1
@@ -8,47 +8,14 @@
 clc;
 close all;
 clear variables;
+%% Parameters
+frames = 146;
+views = 16;
+
+frameOfInterest = 0;
+viewOfInterest = 6;
 %% Load Images
-
-% Set Filename Parameters
-canonicalName = "Painter_pr_00";
-frame = 0;
-view = 0;
-format = ".png";
-
-% Define Matrix to Store Views from One Frame
-lightField = uint8(zeros(1088,2048,3,16));
-
-% Read all Views from One Frame
-for i=1:16
-    sFrame = "";
-    % Format Frame Number in Filename
-    switch strlength(string(frame))
-        case 1
-            sFrame = "00"+string(frame);
-        case 2
-            sFrame = "0"+string(frame);
-        case 3
-            sFrame = string(frame);
-    end
-    
-    % Set 'view' in Every Iteration
-    view = i-1;
-    
-    % Format View Number in Filename
-    sView = "";
-    if view < 10
-        sView = "_0"+string(view);
-    else
-        sView = "_"+string(view);
-    end
-    
-    % Set File Path
-    path = "Images-Frame1\"+canonicalName+sFrame+sView+format;
-    
-    % Read Images
-    lightField(:,:,:,i) = imread(path);
-end
+lightField = genLfSequence("D:\EECE541 - Project - LF2\LightFieldRefocusingProject\TestSequence\","Painter_pr_00",views,frameOfIt,"png");
 %% Display All Views of Given Frame
 figure
 subplot(4,4,1), imshow(lightField(:,:,:,1)), title("1");
@@ -84,9 +51,12 @@ shiftMat(:,:,2) = [98.28,98.14,98.07,97.35;
 %       Conventions are reversed for Imtranslate.
 
 % Run Loop To Generate Views at Different Depths
-depth = 
+depth = 2;
+figure
 for i=1:6
-    temp = lfRefocus(lightField,4,4,shiftMat,3);
-    figure, imshow(uint8(temp));
+    temp = lfRefocus(lightField,4,4,shiftMat,depth);
+    subplot(2,3,i), imshow(uint8(temp)), title("Z = "+string(depth)+" meters");
+    depth = depth+0.5;
 end
+sgtitle("Refocused at Different Depths");
 %% Output

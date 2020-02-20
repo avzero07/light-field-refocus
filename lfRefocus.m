@@ -1,5 +1,4 @@
-%% Light Field Refocus
-% lfRefocus Function
+%% lfRefocus Function
 % @author   - Akshay Viswakumar
 % @email    - akshay.viswakumar@gmail.com
 % @version  - v0.5

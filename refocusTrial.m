@@ -8,47 +8,14 @@
 clc;
 close all;
 clear variables;
+%% Parameters
+frames = 146;
+views = 16;
+
+frameOfInterest = 0;
+viewOfInterest = 6;
 %% Load Images
-
-% Set Filename Parameters
-canonicalName = "Painter_pr_00";
-frame = 0;
-view = 0;
-format = ".png";
-
-% Define Matrix to Store Views from One Frame
-lightField = uint8(zeros(1088,2048,3,16));
-
-% Read all Views from One Frame
-for i=1:16
-    sFrame = "";
-    % Format Frame Number in Filename
-    switch strlength(string(frame))
-        case 1
-            sFrame = "00"+string(frame);
-        case 2
-            sFrame = "0"+string(frame);
-        case 3
-            sFrame = string(frame);
-    end
-    
-    % Set 'view' in Every Iteration
-    view = i-1;
-    
-    % Format View Number in Filename
-    sView = "";
-    if view < 10
-        sView = "_0"+string(view);
-    else
-        sView = "_"+string(view);
-    end
-    
-    % Set File Path
-    path = "Images-Frame1\"+canonicalName+sFrame+sView+format;
-    
-    % Read Images
-    lightField(:,:,:,i) = imread(path);
-end
+lightField = genLfSequence("D:\EECE541 - Project - LF2\LightFieldRefocusingProject\TestSequence\","Painter_pr_00",views,frameOfInterest,"png");
 %% Display All Views of Given Frame
 figure
 subplot(4,4,1), imshow(lightField(:,:,:,1)), title("1");
@@ -67,7 +34,7 @@ subplot(4,4,13), imshow(lightField(:,:,:,13)), title("13");
 subplot(4,4,14), imshow(lightField(:,:,:,14)), title("14");
 subplot(4,4,15), imshow(lightField(:,:,:,15)), title("15");
 subplot(4,4,16), imshow(lightField(:,:,:,16)), title("16");
-sgtitle("All Views from Frame-"+sFrame);
+sgtitle("All Views from Frame-"+string(frameOfInterest));
 %% Compute Refocused Image
 
 % Define Shift Matrix for Painter Scene
