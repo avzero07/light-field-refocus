@@ -10,6 +10,7 @@
 %
 % To Do
 % -----
+% -- Correct File Name Inconsistency
 % -- Set Defaults
 %% Implementation
 function [imSequence] = genImSequence(path,canonicalName,frames,view,format)
@@ -35,8 +36,10 @@ function [imSequence] = genImSequence(path,canonicalName,frames,view,format)
     sView = "";
     if view < 10
         sView = "_0"+string(view);
-    else
+    elseif view >= 10
         sView = "_"+string(view);
+    else
+        sView = "";
     end
 
 % Define Matrix to Store ImSequence
@@ -44,20 +47,20 @@ imSequence = uint8(zeros(1088,2048,3,frames));
 
 % Read Images
 for i=1:frames
-    sFrame = "";
+    sFrame = string(i);
     % Format Frame Number in Filename
     frame = i-1;
-    switch strlength(string(frame))
-        case 1
-            sFrame = "00"+string(frame);
-        case 2
-            sFrame = "0"+string(frame);
-        case 3
-            sFrame = string(frame);
-    end
+%     switch strlength(string(frame))
+%         case 1
+%             sFrame = "00"+string(frame);
+%         case 2
+%             sFrame = "0"+string(frame);
+%         case 3
+%             sFrame = string(frame);
+%     end
     
     % Set File Path
-    fullURI = path+canonicalName+sFrame+sView+"."+format;
+    fullURI = path+canonicalName+"_"+sFrame+"."+format;
     
     % Read Images
     imSequence(:,:,:,i) = imread(fullURI);
