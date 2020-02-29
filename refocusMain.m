@@ -51,7 +51,7 @@ for i=1:146
     temp = uint8(lfRefocus(lightField,4,4,shiftMat,depth));
     % Write Output
     imwrite(temp,opFolder+opCanonical+"_"+string(i)+".png","png");
-    i
+    
 end
 %% Generate Image Sequence for Video
 imSequence = genImSequence(opFolder,opCanonical,frames,0,"png");

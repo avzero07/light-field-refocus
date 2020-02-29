@@ -58,10 +58,9 @@ for i=1:views
     end
     
     % Set File Path
-    fullURI = path+canonicalName+sFrame+sView+"."+format;
-    
+    fullURI = path+canonicalName+sFrame+sView+"."+format;   
     % Read Images
-    lfSequence(:,:,:,i) = imread(fullURI);
+    lfSequence(:,:,:,i) = imread(char(fullURI));
 end
 
 end

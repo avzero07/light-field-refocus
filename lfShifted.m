@@ -13,7 +13,7 @@
 % -- Solve Intensity Problem When Overlap is Minimum
 % -- Add Defaults
 %% Implementation
-function [shiftedLightField] = lfShifted(lightField,arrayLength,arrayDepth,shiftMat,depth)
+function [shiftedLightField, deltaMat] = lfShifted(lightField,arrayLength,arrayDepth,shiftMat,depth)
 %LFSHIFTED Returns the shifted light field based on Depth.
 %   The function takes as input, the sub-aperture images of a scene and
 %   then shifts the different views and stacks them together.
@@ -31,6 +31,8 @@ z0 = 100;   % Pre-Defined
 z1 = 1.63;  % Pre-Defined
 
 d = ((1/z)-(1/z0))/((1/z1)-(1/z0));
+
+deltaMat = -1 * d.*shiftMat;
 
 % Run Loop
 shiftedLightField = zeros(1088,2048,3,arrayLength*arrayDepth);

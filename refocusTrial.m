@@ -15,7 +15,7 @@ views = 16;
 frameOfInterest = 0;
 viewOfInterest = 6;
 %% Load Images
-lightField = genLfSequence("D:\EECE541 - Project - LF2\LightFieldRefocusingProject\TestSequence\","Painter_pr_00",views,frameOfInterest,"png");
+lightField = genLfSequence("/Users/vera/Downloads/EECE541/project/Code/Repo/light-field-refocus/Images-Frame1/", "Painter_pr_00",views,frameOfInterest,'png');
 %% Display All Views of Given Frame
 figure
 subplot(4,4,1), imshow(lightField(:,:,:,1)), title("1");
