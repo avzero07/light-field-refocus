@@ -13,7 +13,7 @@
 % -- Set Defaults
 %% Implementation
 function [lfSequence] = genLfSequence(path,canonicalName,views,frame,format)
-%GENIMSEQUENCE Reads Images from Path and Returns Image Sequence for Video
+%GENLFSEQUENCE Reads Images from Path and Returns Image Sequence for Video
 %   The function loads all views of a specific frame. The combined image
 %   sequence is the light-field (of sub-aperture images) for that frame.
 %
