@@ -35,6 +35,10 @@ Kst = [2340.14,0,1043.09;
      0,2340.14,480.46;
      0,0,1];
  
+% Kst = [2354.05,0,1020.15;
+%      0,2354.05,486.68;
+%      0,0,1];
+ 
 % Shift Matrix for Base View
 shiftMat = changeBaseView(1,1); % TODO: Tweak to accept change in Base View
 

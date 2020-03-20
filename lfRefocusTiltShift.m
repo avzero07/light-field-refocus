@@ -1,20 +1,28 @@
-%% Light Field Refocus
-% Tilt Shift Refocus Script
+%% lfRefocusTiltShift Function
 % @author   - Akshay Viswakumar
 % @email    - akshay.viswakumar@gmail.com
 % @version  - v0.1
-% @date     - 19-March-2020
-%% Init
-clc;
-close all;
-clear variables;
+% @date     - 20-March-2020
+%% Changelog
+% Version 0.5
+% -- Initial Implementation
+% -- Works for Light-Field from NxN Setup
+%
+% To Do
+% -----
+% -- Add Defaults
+%% Implementation
+function [refocusedImage] = lfRefocusTiltShift(z,u,v)
+%UNTITLED Summary of this function goes here
+%   Detailed explanation goes here
+
 %% Camera Parameters
 R = quat2rotm([ 0.9870    0.1520    0.0070   -0.0280]); % Rotation Matrix
 n = [0;0;1]; % Normal From Focal Plane
 t = [0.1075;0.5194;1.7274]; % Translation Vector
-z = 2.9; % Depth of Interest
-u = 1480; % Pixel of Choice from Base Image (U)
-v = 625;  % Pixel of Choice from Base Image (V)
+%z = 4.5; % Depth of Interest
+%u = 1480; % Pixel of Choice from Base Image (U)
+%v = 625;  % Pixel of Choice from Base Image (V)
 shiftMat = changeBaseView(1,1); % ShiftMat Based on Base View (1,1)
  
 % Define Expression for Depth Parameter, d(z)
@@ -26,7 +34,6 @@ depthParam = ((1/z)-(1/z0))/((1/z1)-(1/z0));
 Kst = [2354.05,0,1020.15;
      0,2354.05,486.68;
      0,0,1];
-invKst = inv(Kst);
 %% Load LightField
 frames = 146;
 views = 16;
@@ -83,6 +90,5 @@ for i=1:1:4
 end
 
 refocusedImage = refocusedImage/16;
+end
 
-figure
-imshow(refocusedImage,[])
