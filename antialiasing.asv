@@ -64,14 +64,14 @@ function [antialiasedRefocus,disX_hat, disY_hat] = antialiasing(shiftedLightFiel
                             
                             % use original values if aliasing free
                             rf = double(shiftedLightField(x,y,:,index));
-                            if O ~= 1
+                            if O != 
                                 % use interpolated values if in aliasing region
                                 if dx > T3 || dy > T3
                                     value1 = shiftedLightField(x,y,:,index);
                                     value2 = shiftedLightField(rightX,rightY,:,indexNext);
                                     rf = interpolate(a,b,x,y,rightX,rightY,value1,value2);
                                 end
-                            end
+
                             % sum up
                             antialiasedRefocus(a,b,:) = antialiasedRefocus(a,b,:) + rf;
                             count(a,b) = count(a,b) + 1;

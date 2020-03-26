@@ -59,8 +59,8 @@ depth = 5;
 
 [shiftedLightField, deltaMat] = lfShifted(lightField,arrayLength,arrayDepth,shiftMat,depth); %Get LT matrix,deltaX and daltaY
 disparityMap = lfdisparity(lightField,arrayLength,arrayDepth,deltaMat);
-%disDiffMat = lfdispdiff(disparityMap,3,2);
-%d = prctile(disDiffMat,[97 100],'all'); %Quantile 97 ->58 100->111
+disDiffMat = lfdispdiff(disparityMap,1,1);
+d = prctile(disDiffMat,[97 100],'all'); %Quantile 97 100 58 111
 [antialiasedRefocus, dis, disX, disY] = antialiasing(shiftedLightField,lightField,deltaMat,disparityMap,arrayLength,arrayDepth);
 
 refocus = lfRefocus(lightField,arrayLength,arrayDepth,shiftMat,depth);
