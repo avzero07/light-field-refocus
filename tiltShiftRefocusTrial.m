@@ -12,16 +12,16 @@ clear variables;
 R = quat2rotm([ 0.9870    0.1520    0.0070   -0.0280]); % Rotation Matrix
 n = [0;0;1]; % Normal From Focal Plane
 t = [0.1075;0.5194;1.7274]; % Translation Vector
-z = 2.9; % Depth of Interest
+z = 4.25; % Depth of Interest
 u = 1480; % Pixel of Choice from Base Image (U)
 v = 625;  % Pixel of Choice from Base Image (V)
 shiftMat = changeBaseView(1,1); % ShiftMat Based on Base View (1,1)
  
 % Define Expression for Depth Parameter, d(z)
-z0 = 100;   % Pre-Defined
-z1 = 1.63;  % Pre-Defined
-
-depthParam = ((1/z)-(1/z0))/((1/z1)-(1/z0));
+% z0 = 100;   % Pre-Defined
+% z1 = 1.63;  % Pre-Defined
+% 
+% depthParam = ((1/z)-(1/z0))/((1/z1)-(1/z0));
 
 Kst = [2354.05,0,1020.15;
      0,2354.05,486.68;
@@ -85,4 +85,4 @@ end
 refocusedImage = refocusedImage/16;
 
 figure
-imshow(refocusedImage,[])
+imshow(refocusedImage,[]), title("Focal Plane Normal = ["+string(n(1))+string(n(2))+string(n(3))+"] at Depth (Z) = "+string(z))
