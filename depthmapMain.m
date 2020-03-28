@@ -17,14 +17,16 @@ shiftMat(:,:,2) = [98.28,98.14,98.07,97.35;
 %% Load 4D light field 
 views = 16;
 frameOfInterest = 0;
-lightField = genLfSequence("/Users/vera/Downloads/EECE541/project/Code/Repo/light-field-refocus/Images-Frame1/", "Painter_pr_00",views,frameOfInterest,'png');
+lightField = genLfSequence("F:\Project Space\EECE541\light-field-refocus\Images-Frame1\", "Painter_pr_00",views,frameOfInterest,'png');
+%genLfSequence("/Users/vera/Downloads/EECE541/project/Code/Repo/light-field-refocus/Images-Frame1/", "Painter_pr_00",views,frameOfInterest,'png');
 
 %% Get depthmap of central view
 zmin = 1.63;
 zmax = 100;
 depthRes = 50;
 center = 6;
-depthmap = getDepthmap(lightField,center,shiftMat,zmin,zmax,depthRes);
+K = 5;
+depthmap = getDepthmap(lightField,center,shiftMat,zmin,zmax,depthRes,K);
 
 figure 
 imagesc(depthmap);
