@@ -13,8 +13,8 @@ function ZNCC = getZNCC(lightField,center,z, shiftMat)
     
     Ihat0 = getIhat(centralView);
 %   remove the invalid values, otherwise an error occurs in imtranslate()
-    Ihat0(isinf(Ihat0)) = realmax('double');
-    Ihat0(isnan(Ihat0)) = double(0);
+    Ihat0(isinf(Ihat0)) = realmax(class(Ihat0));
+    Ihat0(isnan(Ihat0)) = 0;
     
 %   size : length * width * 3 * 3
     ZNCC = zeros(size(Ihat0));
@@ -22,8 +22,8 @@ function ZNCC = getZNCC(lightField,center,z, shiftMat)
     for v = 1 : numViews
         if v ~= center
             Ihat = getIhat(rgb2gray(lightField(:,:,:,v)));
-            Ihat(isinf(Ihat)) = realmax('double');
-            Ihat(isnan(Ihat)) = double(0);
+            Ihat(isinf(Ihat)) = realmax(class(Ihat));
+            Ihat(isnan(Ihat)) = 0;
             
 %           index of camera pisition
             vx = floor((v-1)/arrayLength) + 1; 
@@ -33,32 +33,6 @@ function ZNCC = getZNCC(lightField,center,z, shiftMat)
         end
     end
 %   sum up along i and j
-    ZNCC = sum(sum(ZNCC,4),3)/(15*3^2);
+    ZNCC = sum(sum(ZNCC,4),3)/(15*3^2); % Can be improved
     
-end
-
-function Ihat = getIhat(I)
-
-    [length,width] = size(I);
-    
-    I = double(I);
-
-%   local average of view in a 3 by 3 squared neighborhood
-    I2 = padarray(I,[1 1],'symmetric','both');
-    ave_temp = conv2(I2, ones(3,3)/9,'same'); %For zero padding area average will be wrong
-    ave = ave_temp(2:length+1,2:width+1);
-%   compute Ibar
-    Ibar = I - ave;   
-%   compute the local standard deviation of Ibar
-    std = stdfilt(Ibar); % stdfilt default : 3 by 3, n =1
-    
-%   compute Ihat
-    Ihat = zeros(length,width,3,3);
-
-    for i = -1:1
-        for j = -1:1
-            Ihat(:,:,i+2,j+2) = (imtranslate(I,[-i,-j]) - ave)./ std;
-        end
-    end
-
 end

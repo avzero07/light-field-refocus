@@ -1,0 +1,44 @@
+function ZK_1 = upsample(IK,ZK,M,deltaZK,center,shiftMat)
+
+    IK_1 = imresize(IK, 2);
+    [length,width,~,numView] = size(IK_1);
+    
+    ZK_1 = zeros(length,width);
+    
+%   compute Ihat for all of views
+    IhatMat = zeros(length,width,numView);
+    for v = 1:numView
+        Ihat = getIhat(v);
+        Ihat(isnan(Ihat)) = realmax(class(Ihat));
+        IhatMat(:,:,v) = Ihat;
+    end
+
+    
+    index = 1;
+    for x = 1:length
+        for y = 1:width
+            
+%           minimize Eq.19 to obtain local depth among all different i, j, m
+            localZNCCs = zeros(M*3*3);
+            
+            for i = -1:1
+                for j = -1:1
+                    
+                    x_ = floor(x/2);
+                    y_ = floor(y/2);
+%                   consider the depth estimated value in the previous scale in 3 by 3 neighborhood
+                    zk = ZK(x_+i, y_+j);
+                    
+%                   local depth range = [zk - deltaZK/2,zk + deltaZK/2] for each i,j,x,y
+                    for m = 0:M
+                       z = zk - deltaZK/2 + m*deltaZK/2;
+                       localZNCCs(index) = getLocalZNCC(IhatMat,z,x,y,m);
+                       index = index + 1;
+                    end
+                    
+                end
+            end
+            ZK_1(x,y) = min(localZNCC);
+        end
+    end
+end

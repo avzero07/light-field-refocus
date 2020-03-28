@@ -1,17 +1,14 @@
-function depthmap = getDepthmap(lightField,center,shiftMat,zmin,zmax,depthRes,K)
-    f = waitbar(0,'Start');
+function depthmap = getDepthmap(lightField,center,shiftMat,zmin,zmax,depthRes)
     [length,width,~,~] = size(lightField);
 
-    depthSeq = linspace(zmin, zmax, depthRes+1);
-    deltaDepth = round(abs(zmax-zmin)/depthRes);
+    depthSeq = linspace(zmin, zmax, depthRes);
+    %linspace(zmin, zmax, depthRes+1);
    
-    ZNCCs = zeros(length,width,depthRes+1);
-    depthNum = depthRes+1;
+    ZNCCs = zeros(length,width,depthRes);%zeros(length,width,depthRes+1);
+    %depthNum = depthRes+1;
+    
 %   depth z in [zmin, zmax]
-   % for k = K+1 :-1:1
-    %ZNCC = zeros(length,width,depthRes+1);
-    for d =1:depthNum
-        waitbar(d/depthNum,f,sprintf('depth=%d',d));
+    for d =1:depthRes
         z = depthSeq(d);
 %       compute ZNCC for each sampled depth z
         ZNCCs(:,:,d) = getZNCC(lightField,center,z, shiftMat);

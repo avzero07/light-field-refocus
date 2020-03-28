@@ -8,21 +8,21 @@ function [antialiasedRefocus,disX_hat, disY_hat] = antialiasing(shiftedLightFiel
 % arrayLength -- length of the camera array
 % arrayDepth -- depth of the camera array
 
-    antialiasedRefocus = zeros(129,129,3);%(1088,2048,3); %The empty canvas for accumulating calculated pixel views from all views
-    count = zeros(129,129,3);%(1088,2048); % number of additions at each pixel
+    antialiasedRefocus = zeros(1088,2048,3); %The empty canvas for accumulating calculated pixel views from all views
+    count = zeros(1088,2048); % number of additions at each pixel
     disparityRange = [0,112];
 
     f = waitbar(0,'Start');
 
     % diaparity between camera (i,j) and camera (i+1, j+1)
-    for i=1: arrayLength - 1  %Why arraylength - 1
-        for j=1: arrayDepth - 1%Why arraydepth - 1
+    for i=1: arrayLength - 1
+        for j=1: arrayDepth - 1
 
 
             index = indexconvertor(i,j,arrayLength); %Mapping view's position in array to its view number
             indexNext = indexconvertor(i+1,j+1,arrayLength);
 
-            % calculate the diaparity map for original light field images
+             % calculate the diaparity map for original light field images
              % the returned disparity values are rounded to 1/16th pixel
              % elements that were not computed reliably are marked -> ?realmax('single')
             disX_hat = disparityMap(:,:,i,j,1);
