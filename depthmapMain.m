@@ -19,7 +19,7 @@ views = 16;
 frameOfInterest = 0;
 lightField = genLfSequence("/Users/vera/Downloads/EECE541/project/Code/Repo/light-field-refocus/Images-Frame1/", "Painter_pr_00",views,frameOfInterest,'png');
 
-%% Get depthmap of central view
+%% Get depthmap of central view -- correspondence matching
 zmin = 1.63;
 zmax = 100;
 depthRes = 50;
@@ -28,3 +28,12 @@ depthmap = getDepthmap(lightField,center,shiftMat,zmin,zmax,depthRes);
 
 figure 
 imagesc(depthmap);
+title("correspondence matching");
+%% Get depthmap of central view -- multiresolution stratege
+K = 4;
+M = 2;
+depthmap = multiRes(lightField,center,shiftMat,zmin,zmax,depthRes,K,M);
+
+figure 
+imagesc(depthmap);
+title(sprintf('final multi resolution with k=%d',0));
