@@ -25,7 +25,7 @@ function ZK_1 = upsample(IK_1,ZK,M,deltaZK,center,shiftMat)
 %           minimize Eq.19 to obtain local depth among all different i, j, m
             localZNCC = realmax("double");
             zmin = 1;
-            
+
             for i = -1:1
                 for j = -1:1
                     
@@ -46,12 +46,13 @@ function ZK_1 = upsample(IK_1,ZK,M,deltaZK,center,shiftMat)
                        z = zk - deltaZK/2 + m*deltaZK/M;
                        curZNCC = getLocalZNCC(IhatMat,z,x,y,center,shiftMat);
                        if curZNCC < localZNCC
-                       localZNCC = curZNCC;
-                       zmin = z;
+                           localZNCC = curZNCC;
+                           zmin = z;
                        end
                     end                    
                 end
             end
+
             ZK_1(y,x) = zmin;
         end
     end
