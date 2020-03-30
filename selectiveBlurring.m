@@ -1,4 +1,4 @@
-%% genLfSequence Function
+%% selectiveBlurring Function
 % @author   - Akshay Viswakumar
 % @email    - akshay.viswakumar@gmail.com
 % @version  - v0.1
