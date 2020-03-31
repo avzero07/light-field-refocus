@@ -13,7 +13,7 @@
 % -- Set Defaults
 %% Implementation
 function [lfSequence] = genLfSequence(path,canonicalName,views,frame,format)
-%GENIMSEQUENCE Reads Images from Path and Returns Image Sequence for Video
+%GENLFSEQUENCE Reads Images from Path and Returns Image Sequence for Video
 %   The function loads all views of a specific frame. The combined image
 %   sequence is the light-field (of sub-aperture images) for that frame.
 %
@@ -42,7 +42,7 @@ switch strlength(string(frame))
         sFrame = string(frame);
 end
 
-% Define Matrix to Store ImSequence
+% Define Matrix to Store ImSequence, resolution 1088*2048*3 channel * views
 lfSequence = uint8(zeros(1088,2048,3,views));
 
 % Read Images
@@ -50,7 +50,7 @@ for i=1:views
     
     % Format View Number in Filename
     view = i-1;
-    sView = "";
+    sView = "";% The string of view number
     if view < 10
         sView = "_0"+string(view);
     else
@@ -58,10 +58,9 @@ for i=1:views
     end
     
     % Set File Path
-    fullURI = path+canonicalName+sFrame+sView+"."+format;
-    
+    fullURI = path+canonicalName+sFrame+sView+"."+format;   
     % Read Images
-    lfSequence(:,:,:,i) = imread(fullURI);
+    lfSequence(:,:,:,i) = imread(char(fullURI));
 end
 
 end
