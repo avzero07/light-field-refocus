@@ -24,8 +24,8 @@ function ZNCC = getLocalZNCC(IhatMat,z,x,y,ref,shiftMat)
             vx = floor((v-1)/arrayLength) + 1; 
             vy = mod(v-1,arrayLength) + 1;
             
-            x_ = round(x+d*shiftMat(vy,vx,1));
-            y_ = round(y+d*shiftMat(vy,vx,2));
+            x_ = round(x-d*shiftMat(vy,vx,1));
+            y_ = round(y-d*shiftMat(vy,vx,2));
            
             if x_ < 1 || x_ > length || y_ < 1 || y_ > width
                 Ihat = zeros(3,3);

@@ -13,20 +13,21 @@ shiftMat(:,:,2) = [98.28,98.14,98.07,97.35;
                    -1.73,0,0.74,0.11;
                    -99.93,-99.11,-101.12,-99.07;
                    -197.68,-198.14,-198.89,-199.37];%% Y Direction
-               
+
+shiftMat = changeBaseView(0,0);
 %% Load 4D light field 
 views = 16;
 frameOfInterest = 0;
-lightField = genLfSequence("D:\EECE541\depth estimation\Images-Frame1\", "Painter_pr_00",views,frameOfInterest,'png');
+lightField = genLfSequence("D:\EECE541 - Project - LF2\LightFieldRefocusingProject\Sample\", "Painter_pr_00",views,frameOfInterest,'png');
 %genLfSequence("/Users/vera/Downloads/EECE541/project/Code/Repo/light-field-refocus/Images-Frame1/", "Painter_pr_00",views,frameOfInterest,'png');
 
 %% Get depthmap of central view -- correspondence matching
 zmin = 2;
 zmax = 100;
 depthRes = 50;
-center = 6;
+center = 1;
 %depthmap = getDepthmap(lightField,center,shiftMat,zmin,zmax,depthRes,K);
-
+lightField = lightField(:,:,:,1:2);
 %figure 
 %imagesc(depthmap);
 %title("correspondence matching");
@@ -35,6 +36,7 @@ K = 4;
 M = 2;
 depthmap = multiRes(lightField,center,shiftMat,zmin,zmax,depthRes,K,M);
 
+%% Plot
 figure 
-imagesc(depthmap);
+imshow(depthmap,[]);
 title(sprintf('final multi resolution with k=%d',0));

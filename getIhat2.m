@@ -1,4 +1,4 @@
-function Ihat = getIhat2(grayView,average,std)
+function Ihat = getIhat2(grayView,average,stad)
 
     [width,length] = size(grayView);
     
@@ -8,7 +8,7 @@ function Ihat = getIhat2(grayView,average,std)
     for i = -1:1
         for j = -1:1            
             Ihat_i_j = zeros(width,length);
-            Ihat_temp = (imtranslate(grayView,[-i,-j]) - average)./std;
+            Ihat_temp = (imtranslate(grayView,[-i,-j]) - average)./stad;
             % Calculate the window size to cut out correct Ihat values
             % after translation, fix boundary values 
             length_s = 1-i;
