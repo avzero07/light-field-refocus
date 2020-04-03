@@ -67,6 +67,6 @@ for i=1:s
         lfSequence(i,j,:,:,:) = imread(fullURI); 
     end
 end
-
+    save('./LFMat.mat',lfSequence);
 end
 

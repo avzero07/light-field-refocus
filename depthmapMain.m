@@ -16,13 +16,12 @@ shiftMat(:,:,2) = [98.28,98.14,98.07,97.35;
                
 %% Load 4D light field 
 views = 16;
-frameOfInterest = 0;
-lightField = genLfSequence("D:\EECE541\depth estimation\Images-Frame1\", "Painter_pr_00",views,frameOfInterest,'png');
+frameOfInterest = 84;
 %genLfSequence("/Users/vera/Downloads/EECE541/project/Code/Repo/light-field-refocus/Images-Frame1/", "Painter_pr_00",views,frameOfInterest,'png');
-
+lightFieldGrey = genLfSequenceGray("D:\EECE541\light-field_refocus2\light-field-refocus\Images-Frame85\", "Painter_pr_00",views,frameOfInterest,'png');
 %% Get depthmap of central view -- correspondence matching
 zmin = 2;
-zmax = 100;
+zmax = 10;
 depthRes = 50;
 center = 6;
 %depthmap = getDepthmap(lightField,center,shiftMat,zmin,zmax,depthRes,K);
@@ -33,8 +32,13 @@ center = 6;
 %% Get depthmap of central view -- multiresolution stratege
 K = 4;
 M = 2;
-depthmap = multiRes(lightField,center,shiftMat,zmin,zmax,depthRes,K,M);
+z = 4;
+%zncc = getZNCC3(lightFieldGrey, center, z, shiftMat);
+%figure
+%imshow(zncc);
+depthmap = multiRes(lightFieldGrey,center,shiftMat,zmin,zmax,depthRes,K,M);
 
 figure 
-imagesc(depthmap);
+imshow(mat2gray(depthmap));
+colormap jet;
 title(sprintf('final multi resolution with k=%d',0));

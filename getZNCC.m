@@ -32,9 +32,8 @@ function ZNCC = getZNCC(grayViews,aveMat,stdMat,ref,z, shiftMat)
             corAvg = aveMat(:,:,v);
             corStd = stdMat(:,:,v);
             Ihat = getIhat2(corView,corAvg,corStd);
-            %temp = Ihat(:,:,3,3);
-            %Ihat(isinf(Ihat)) = realmax(class(Ihat));
-            %Ihat(isnan(Ihat)) = 0;
+            Ihat(isinf(Ihat)) = 0;
+            Ihat(isnan(Ihat)) = 0;
             
 %           index to camera position conversion
             vx = floor((v-1)/arrayLength) + 1; 
