@@ -34,6 +34,7 @@ end
 
 % Create ChooseFilt and Populate
 chooseFilt = zeros(1,numLevels);
+
 chooseFilt(numBinsBelow+1) = 1;
 
 index = 2;

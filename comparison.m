@@ -6,10 +6,11 @@ close all;
 
 %% Selective Refocus
 img = imread('Sample-Depth\painter.png');
-imgDepth = imread('Sample-Depth\painterDepth.png');
+imgDepth = imread('Sample-Depth\painter-depth.png');
 
-result = selectiveBlurring(img,imgDepth,20,[170 180],40);
+result = selectiveBlurring(img,imgDepth,20,[1 10],35);
 
+figure, imshow(result), title('Selective Blur Range')
 %% Shift Sum
 depth = 4;
 % Define Shift Matrix for Painter Scene

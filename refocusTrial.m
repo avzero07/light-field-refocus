@@ -12,8 +12,8 @@ clear variables;
 frames = 146;
 views = 16;
 
-frameOfInterest = 0;
-viewOfInterest = 6;
+frameOfInterest = 85;
+viewOfInterest = 16;
 %% Load Images
 lightField = genLfSequence("D:\EECE541 - Project - LF2\LightFieldRefocusingProject\TestSequence\","Painter_pr_00",views,frameOfInterest,"png");
 %% Display All Views of Given Frame
@@ -38,15 +38,7 @@ sgtitle("All Views from Frame-"+string(frameOfInterest));
 %% Compute Refocused Image
 
 % Define Shift Matrix for Painter Scene
-shiftMat = zeros(4,4,2);
-shiftMat(:,:,1) = [100,-0.36,-97.19,-195.55;
-                   98.67,0,-96.18,-197.85;
-                   99.17,0.21,-98.33,-197;
-                   99.08,-1.22,-99.26,-198.36];
-shiftMat(:,:,2) = [98.28,98.14,98.07,97.35;
-                   -1.73,0,0.74,0.11;
-                   -99.93,-99.11,-101.12,-99.07;
-                   -197.68,-198.14,-198.89,-199.37];
+shiftMat = changeBaseView(3,3);
 % Note: Multiply shiftMat(:,:,2) by -1 when Using
 %       Conventions are reversed for Imtranslate.
 
