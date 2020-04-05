@@ -11,12 +11,13 @@
 % -----
 % -- 
 %% Implementation
-function [znccForZ] = computeZNCC3(lightFieldGray,shiftMat,refIndex,z,IhatMat2)
+function [znccForZ] = computeZNCC3(lightFieldGray,shiftMat,refIndex,z,IhatMat)
 %COMPUTEZNCC Finds the ZNCC at Depth z
 %   Detailed explanation goes here
 
 %% Init
-znccForZ = zeros(size(lightFieldGray,1),size(lightFieldGray,2)); %Generate a matrix to save ZNCC
+[width,length,~,~,~] = size(IhatMat);
+znccForZ = zeros(width,length); %Generate a matrix to save ZNCC
 
 
 % For Refocus
@@ -55,7 +56,7 @@ end
 %IhatMat(isinf(IhatMat)) = realmax(class(IhatMat));
 IhatMat2 = permute(IhatMat,[3,4,1,2,5]); % ImageRow,ImageColomn,neighbor_i,neighbor_j,viewnumber
 %}
-refIhat = IhatMat2(:,:,:,:,refIndex); % ImageRow,ImageColomn,neighbor_i,neighbor_j
+refIhat = IhatMat(:,:,:,:,refIndex); % ImageRow,ImageColomn,neighbor_i,neighbor_j
 refIhat2 = permute(refIhat,[3,4,1,2]); %neighbor_i,neighbor_j,imageRow,imageColomn
 
 %% Loop Through Light Field
@@ -67,14 +68,14 @@ for i=1:4
         if(index==refIndex)
             continue;
         end
-        imgIhat = IhatMat2(:,:,:,:,index); % ImageRow,ImageColomn,neighbor_i,neighbor_j
+        imgIhat = IhatMat(:,:,:,:,index); % ImageRow,ImageColomn,neighbor_i,neighbor_j
         % Pad Image to Be Compared
         imgIhat = double(imtranslate(imgIhat,[-1*d*shiftMat(i,j,1),-1*d*shiftMat(i,j,2)])); % ImageRow,ImageColomn,neighbor_i,neighbor_j
         imgIhat2 = permute(imgIhat,[3,4,1,2]);%neighbor_i,neighbor_j,imageRow,imageColomn
         
         % Loop Through Image for Neighborhood Operation
-        for x=1:size(lightFieldGray,1)
-            for y=1:size(lightFieldGray,2)               
+        for x=1:width
+            for y=1:length               
                 
                 refImgIhat = refIhat2(:,:,x,y);
                 corImgIhat = imgIhat2(:,:,x,y);

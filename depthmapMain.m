@@ -67,10 +67,12 @@ parfor f = 1:frameLen
     tic
     depthMap = multiRes(lightFieldGray,refIdx,newshiftMat,zmin,zmax,depthRes,K,M);
     toc
+    %{
     figure 
     imshow(mat2gray(depthMap));
     colormap jet;
     title(sprintf('depthMap for frame %d',frameOfInterest));
+    %}
     depthMapMat(:,:,f) = depthMap;
     depthMapConv = uint8(255*mat2gray(depthMap));
     filename = prefix + string(frameOfInterest)+suffix;

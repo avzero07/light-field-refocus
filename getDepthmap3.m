@@ -33,13 +33,13 @@ function depthmap = getDepthmap3(lightFieldGray,center,shiftMat,zmin,zmax,depthR
     end
     IhatMat(isnan(IhatMat)) = 0;
     %IhatMat(isinf(IhatMat)) = realmax(class(IhatMat));
-    IhatMat2 = permute(IhatMat,[3,4,1,2,5]); % ImageRow,ImageColomn,neighbor_i,neighbor_j,viewnumber
+    IhatMat = permute(IhatMat,[3,4,1,2,5]); % ImageRow,ImageColomn,neighbor_i,neighbor_j,viewnumber
 %   depth z in [zmin, zmax]
     for i =1:depthRes+1
         z = depthSeq(i);%depthSeq(i);
 %       compute ZNCC for each sampled depth z
-        temp = computeZNCC3(lightFieldGray, shiftMat, center,z,IhatMat2);        
-        ZNCCs(:,:,i) = temp;%getZNCC(lightField, center, z, shiftMat);
+        %temp = computeZNCC3(lightFieldGray, shiftMat, center,z,IhatMat);        
+        ZNCCs(:,:,i) = computeZNCC3(lightFieldGray, shiftMat, center,z,IhatMat);%getZNCC(lightField, center, z, shiftMat);
     end
 %   for each pixel, find the argument of the mininum in ZNCCs
     [~,index] = max(ZNCCs,[],3);%min(ZNCCs,[],3);
