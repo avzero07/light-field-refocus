@@ -1,4 +1,4 @@
-function ZK_1 = upsample2(lightFieldGray,prevZ,delz,ref,shiftMat,zmin)
+function ZK_1 = upsample2(lightFieldGray,prevZ,delz,ref,shiftMat,zmin,M)
 
    
     [width,length,numViews] = size(lightFieldGray);
@@ -11,10 +11,10 @@ function ZK_1 = upsample2(lightFieldGray,prevZ,delz,ref,shiftMat,zmin)
     IhatMat = zeros(3,3,size(lightFieldGray,1),size(lightFieldGray,2),numViews);
     %% Loop Through Light Field
     index = 0;
-    f = waitbar(0,'Start'); 
+   % f = waitbar(0,'Start'); 
     for i=1:4
         for j=1:4
-            waitbar(((i-1)*4+j)/16,f,sprintf('i=%d,j=%d',i,j));
+            %waitbar(((i-1)*4+j)/16,f,sprintf('i=%d,j=%d',i,j));
             index = index+1;
 
             img = double(lightFieldGray(:,:,index)); 
@@ -34,11 +34,11 @@ function ZK_1 = upsample2(lightFieldGray,prevZ,delz,ref,shiftMat,zmin)
         end
     end
     IhatMat(isnan(IhatMat)) = 0;
-    IhatMat(isinf(IhatMat)) = realmax(class(IhatMat));
+    %IhatMat(isinf(IhatMat)) = realmax(class(IhatMat));
     %IhatMat2 = permute(IhatMat,[3,4,1,2,5]); % ImageRow,ImageColomn,neighbor_i,neighbor_j,viewnumber 
     prevZ = padarray(prevZ,[1 1],0,'both');   
     for x = 1:width
-        waitbar(x/width,f,sprintf('row=%d',x));
+        %waitbar(x/width,f,sprintf('row=%d',x));
         for y = 1:length
             %waitbar(((x-1)*length+y)/length/width,f,sprintf('row=%d,colomn=%d',x,y));
 
@@ -49,10 +49,13 @@ function ZK_1 = upsample2(lightFieldGray,prevZ,delz,ref,shiftMat,zmin)
             subPrevZ = prevZ(round(x/2)-1+1:round(x/2)+1+1,round(y/2)-1+1:round(y/2)+1+1);
 
             % Use subPrrevZ to compute Depth Cube
-            depthCube = zeros(3,3,3); % neighbor i, neighbor j, three depth level
-            depthCube(:,:,2) = subPrevZ;
-            depthCube(:,:,1) = subPrevZ-(delz/2);
-            depthCube(:,:,3) = subPrevZ+(delz/2);
+            depthCube = zeros(3,3,M+1); % neighbor i, neighbor j, three depth level
+            for m = 0:1:M
+                depthCube(:,:,m+1) = subPrevZ -(delz/2) + m*(delz/M);
+            end
+            %depthCube(:,:,2) = subPrevZ;
+            %depthCube(:,:,1) = subPrevZ-(delz/2);
+            %depthCube(:,:,3) = subPrevZ+(delz/2);
 
             depthList = unique(depthCube); % Returns List of Depths to Traverse Through
             depthList = depthList(depthList>zmin); % Since 1.63 is least Depth
@@ -66,9 +69,9 @@ function ZK_1 = upsample2(lightFieldGray,prevZ,delz,ref,shiftMat,zmin)
             end
 
             %% Find minZ
-            [m,ind] = max(znccList);
-            minZxy = depthList(ind);
-            ZK_1(x,y) = minZxy;
+            [~,ind] = max(znccList);
+            maxZxy = depthList(ind);
+            ZK_1(x,y) = maxZxy;
         end
     end
 end

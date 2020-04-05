@@ -47,8 +47,8 @@ imshow(mat2gray(depthmap));
 colormap jet;
 title(sprintf('final multi resolution with k=%d',0));
 %}
-s_frame = 85;
-e_frame = 85;
+s_frame = 9;
+e_frame = 8;
 s = 1;
 t = 1;
 frame_num = e_frame-s_frame+1;
@@ -67,15 +67,16 @@ parfor f = 1:frameLen
     tic
     depthMap = multiRes(lightFieldGray,refIdx,newshiftMat,zmin,zmax,depthRes,K,M);
     toc
-    figure 
-    imshow(mat2gray(depthMap));
-    colormap jet;
-    title(sprintf('depthMap for frame %d',frameOfInterest));
+    %figure 
+    %imshow(mat2gray(depthMap));
+    %colormap jet;
+    %title(sprintf('depthMap for frame %d',frameOfInterest));
     depthMapMat(:,:,f) = depthMap;
     depthMapConv = uint8(255*mat2gray(depthMap));
     filename = prefix + string(frameOfInterest)+suffix;
+    filename
     imwrite(depthMapConv,filename,'png');
     frameOfInterest
 end
-save(".\Output\depthMaps19to18.mat",'depthMapMat','-v7.3');
+save(".\Output\depthMaps1and85.mat",'depthMapMat');
 %depthMapMat = computeDepthmaps(1,1,zmin,zmax,depthRes,K,M,frameSeq);

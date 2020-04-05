@@ -35,7 +35,11 @@ shiftMat(:,:,2) = [98.28,98.14,98.07,97.35;
 % Initialize New Shift Matrix
 newShiftMat = zeros(4,4,2);
 % Shift Relative to new (s,t)
-newShiftMat(:,:,1) = shiftMat(:,:,1) - shiftMat(s+1,t+1,1);
-newShiftMat(:,:,2) = shiftMat(:,:,2) - shiftMat(s+1,t+1,2);
+if s ~= 1 && t ~= 1
+    newShiftMat(:,:,1) = shiftMat(:,:,1) - shiftMat(s+1,t+1,1);
+    newShiftMat(:,:,2) = shiftMat(:,:,2) - shiftMat(s+1,t+1,2);
+else
+    newShiftMat = shiftMat;
+end
 end
 

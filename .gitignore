@@ -1,1 +1,4 @@
 *.mat
+Output/
+depthoutput/
+depthmap/
