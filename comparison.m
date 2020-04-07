@@ -8,7 +8,7 @@ close all;
 img = imread('Sample-Depth\painter.png');
 imgDepth = imread('Sample-Depth\painter-depth.png');
 
-result = selectiveBlurring(img,imgDepth,20,[1 10],35);
+result = selectiveBlurring(img,imgDepth,20,[60 100],35);
 
 figure, imshow(result), title('Selective Blur Range')
 %% Shift Sum

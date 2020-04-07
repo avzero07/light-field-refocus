@@ -92,6 +92,5 @@ end
 
 % Just so That Final Output is Returned as uint8
 blurredImage = uint8(blurredImage);
-
 end
 
