@@ -13,7 +13,7 @@
 % -- Solve Intensity Problem When Overlap is Minimum
 % -- Add Defaults
 %% Implementation
-function [shiftedLightField, deltaMat] = lfShifted(lightField,arrayLength,arrayDepth,shiftMat,depth)
+function [refocus,shiftedLightField, deltaMat] = lfShiftSum(lightField,shiftMat,depth)
 %LFSHIFTED Returns the shifted light field based on Depth.
 %   The function takes as input, the sub-aperture images of a scene and
 %   then shifts the different views and stacks them together.
@@ -34,14 +34,20 @@ d = ((1/z)-(1/z0))/((1/z1)-(1/z0));
 
 deltaMat = -1 * d.*shiftMat;
 
+[length,width,~,numViews] = size(lightField);
+m = sqrt(numViews);
+
+refocus = zeros(length,width,3);
+
 % Run Loop
-shiftedLightField = zeros(1088,2048,3,arrayLength*arrayDepth);
+shiftedLightField = zeros(length,width,3,numViews);
 index = 0;
-for i=1:arrayLength
-    for j=1:arrayDepth
+for i=1:m
+    for j=1:m
         index = index + 1;
-        shiftedLightField(:,:,:,index) = double(imtranslate(lightField(:,:,:,index),[-1*d*shiftMat(i,j,1),-1*d*shiftMat(i,j,2)]));
+        shiftedLightField(:,:,:,index) = double(imtranslate(lightField(:,:,:,index),[deltaMat(i,j,1),deltaMat(i,j,2)]));
+        refocus = refocus + shiftedLightField(:,:,:,index);
     end
 end
-
+refocus = refocus/numViews;
 end
