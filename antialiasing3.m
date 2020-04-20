@@ -1,4 +1,4 @@
-function antialiasedRefocus = antialiasing2(shiftedLightField,lightField,center,deltaMat,disparity,xRange,yRange)
+function antialiasedRefocus = antialiasing3(shiftedLightField,lightField,center,deltaMat,disparityMat,xRange,yRange)
 % shift and sum + local interpolation to obtain the antialiased refocused image
 
     [length,width,~,numViews] = size(lightField);
@@ -14,23 +14,23 @@ function antialiasedRefocus = antialiasing2(shiftedLightField,lightField,center,
 %   number of additions at each pixel
     count = zeros(length,width); 
 
-%   compute diaparity between view(i,j) and central view(2,2)
-    for i=1:m
-        for j=1:m           
+%   compute diaparity between view(i,j) and diagonally adacent view(i+1,j+1)
+    for i=1:m-1
+        for j=1:m-1           
             
             index = indexconvertor(i,j,m);
+            next = indexconvertor(i+1,j+1,m);
             
-%           disparity to central view 
-
-%                   *  -(d-?x) 
-%                      c
-%                         *   d-?x 
-%                            *   2(d-?x)
+%           current disparity to next view
+%                   *  (i,j) --- disX = d-?x
+%                      * (i+1,j+1) 
 %           left--right
-            disX = (j-2) * disparity - deltaMat(i,j,1);% minus shifting
+            disX = disparityMat(:,:,index) - (deltaMat(i+1,j+1,1) - deltaMat(i,j,1));% minus shifting
+
 %           up--down
-            disY = (i-2) * disparity - deltaMat(i,j,2);
-              
+            disY = disparityMat(:,:,index) - (deltaMat(i+1,j+1,2) - deltaMat(i,j,2));
+ 
+            
             for x = xRange
                 for y = yRange
 
@@ -60,20 +60,21 @@ function antialiasedRefocus = antialiasing2(shiftedLightField,lightField,center,
                     end
                     
                      % interpolate if in aliasing region
-                    if (abs(dx) > T1*(j-2) && abs(dx) < T2*(j-2)) || (abs(dy) > T1*(i-2) && abs(dy) < T2*(i-2))
-                          value1 = shiftedLightField(x,y,:,center);
-                          value2 = shiftedLightField(nextX,nextY,:,index);
+                    if (abs(dx) > T1 && abs(dx) < T2) || (abs(dy) > T1 && abs(dy) < T2)
+                        value1 = shiftedLightField(x,y,:,index);
+                        value2 = shiftedLightField(nextX,nextY,:,next);
 
-                          value = interpolate(x,y,leftX, rightX, leftY, rightY,nextX,nextY,value1,value2);
+                        value = interpolate(x,y,leftX, rightX, leftY, rightY,nextX,nextY,value1,value2);
                           
-                          antialiasedRefocus(leftX:rightX,leftY:rightY,:) = antialiasedRefocus(leftX:rightX,leftY:rightY,:) + value;
-                          count(leftX:rightX,leftY:rightY) = count(leftX:rightX,leftY:rightY)+1;
+                        antialiasedRefocus(leftX:rightX,leftY:rightY,:) = antialiasedRefocus(leftX:rightX,leftY:rightY,:) + value;
+                        count(leftX:rightX,leftY:rightY) = count(leftX:rightX,leftY:rightY)+1;
                         
-                    elseif abs(dx) <= T1*(j-2) && abs(dy) <= T1*(i-2)
+                    elseif abs(dx) <= T1 && abs(dy) <= T1
                         % use original values if aliasing free
                         rf = double(shiftedLightField(x,y,:,index));
                         antialiasedRefocus(x,y,:) = antialiasedRefocus(x,y,:) + rf;
                         count(x,y) = count(x,y) + 1; 
+                    
                     % else occlusion region, no addition
                     end
                 end

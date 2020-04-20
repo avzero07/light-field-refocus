@@ -25,30 +25,55 @@ frameOfInterest = 59;
 lightField = genLfSequence("./data/LightFieldRefocusingProject/TestSequence/", "Painter_pr_00",views,frameOfInterest,'png');
 
 %% Compute the antialiased refocus image and compare with original refocus image
-
-depth = 4;
+% Before antialiasing 
+depth = 1.8;
 center = 6;
-load ./depthmap/depthMaps59_11.mat
 
 focalLength = 2354.05; % pixels
 cameraDis = 0.07; % meter
 
-disparity = cameraDis*focalLength./depthMapMat;
+lfSize = size(lightField);
+xRange = 1:lfSize(1); % 600:700; 
+yRange = 1:lfSize(2); % 420:520; 
 
 % get shifted lf matrix, deltaX and daltaY, and refocused image
 [refocus,shiftedLightField, deltaMat] = lfShiftSum(lightField,shiftMat,depth); 
 
+
+%% Based on the central depthmap
+
+load ./depthmap/depthMaps59_11.mat
+disparity = cameraDis*focalLength./depthMapMat;
+
 % shift and sum + local interpolation
-lfSize = size(lightField);
-xRange = 1:lfSize(1);
-yRange = 1:lfSize(2);
-antialiasedRefocus = antialiasing2(shiftedLightField,lightField,center,deltaMat,disparity,xRange,yRange);
+antiRefo2 = antialiasing2(shiftedLightField,lightField,center,deltaMat,disparity,xRange,yRange);
 
-subplot(2,1,1), imshow(uint8(antialiasedRefocus(xRange,yRange,:))), title("Antialiased Refocus");
-subplot(2,1,2), imshow(uint8(refocus(xRange,yRange,:))), title("Refocus");
+%% Based on multiple depthmaps
 
-imwrite(uint8(antialiasedRefocus),"./antiRefo/antiRefo"+frameOfInterest+"_d"+depth+".png");
+% load depth maps of all views
+folder = "./depthmap/depthMaps59_";
+disparityMat = zeros(lfSize(1),lfSize(2),lfSize(4));
 
+index = 1;
+for i=0:3
+    for j=0:3
+        path = folder+i+j+".mat";
+        depthmap = load(char(path),'depthMapMat');
+        disparityMat(:,:,index) = cameraDis*focalLength./depthMapMat;
+        index = index + 1;
+    end
+end
 
+antiRefo3 = antialiasing3(shiftedLightField,lightField,center,deltaMat,disparityMat,xRange,yRange);
+
+%% Show images
+
+subplot(3,1,1), imshow(uint8(refocus(xRange,yRange,:))), title("Refocus");
+subplot(3,1,2), imshow(uint8(antiRefo2(xRange,yRange,:))), title("AntiRefo-central depthmap");
+subplot(3,1,3), imshow(uint8(antiRefo3(xRange,yRange,:))), title("AntiRefo-multiple depthmaps");
+
+imwrite(uint8(refocus),"./antiRefo/refocus_"+frameOfInterest+"_d"+depth+".png");
+imwrite(uint8(antiRefo2),"./antiRefo/antiRefo2_"+frameOfInterest+"_d"+depth+".png");
+imwrite(uint8(antiRefo3),"./antiRefo/antiRefo3_"+frameOfInterest+"_d"+depth+".png");
 
 
