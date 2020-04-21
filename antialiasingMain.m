@@ -6,13 +6,13 @@ clear variables;
 %% Initialize shifting matrix
 
 shiftMat = zeros(4,4,2);
-% X Direction : left-right
+% Y Direction : left-right
 shiftMat(:,:,1) = [100,-0.36,-97.19,-195.55;
                    98.67,0,-96.18,-197.85;
                    99.17,0.21,-98.33,-197;
                    99.08,-1.22,-99.26,-198.36];
                
-% Y Direction : up-down
+% X Direction : up-down
 shiftMat(:,:,2) = [98.28,98.14,98.07,97.35;
                    -1.73,0,0.74,0.11;
                    -99.93,-99.11,-101.12,-99.07;
@@ -34,7 +34,7 @@ cameraDis = 0.07; % meter
 
 lfSize = size(lightField);
 xRange = 1:lfSize(1); % 600:700; 
-yRange = 1:lfSize(2); % 420:520; 
+yRange = 1:lfSize(2); % 420:520;
 
 % get shifted lf matrix, deltaX and daltaY, and refocused image
 [refocus,shiftedLightField, deltaMat] = lfShiftSum(lightField,shiftMat,depth); 

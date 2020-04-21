@@ -45,6 +45,7 @@ index = 0;
 for i=1:m
     for j=1:m
         index = index + 1;
+        % imtranslate(im, [+right-left,+down-up])
         shiftedLightField(:,:,:,index) = double(imtranslate(lightField(:,:,:,index),[deltaMat(i,j,1),deltaMat(i,j,2)]));
         refocus = refocus + shiftedLightField(:,:,:,index);
     end

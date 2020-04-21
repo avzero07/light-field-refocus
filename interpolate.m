@@ -10,11 +10,16 @@
 % end
 
 function value = interpolate(x,y,leftX, rightX, leftY, rightY,nextX,nextY,value1,value2)
-    
+
+%   y : left-right
+
 %   ly ly+1 ly+2...ry
 %   ly ly+1 ly+2...ry
 %   ...
     indexY = repmat(leftY:rightY,[rightX-leftX+1,1]);
+    
+%   x : up-down
+
 %   lx   lx   lx...
 %   lx+1 lx+1 lx+1...
 %   ...
