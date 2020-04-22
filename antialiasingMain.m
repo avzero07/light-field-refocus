@@ -36,8 +36,8 @@ focalLength = [2354.048,2339.371,2346.855,2347.432;
 cameraDis = 0.07; % meter
 
 lfSize = size(lightField);
-xRange = 600:700; % 1:lfSize(1); 
-yRange = 420:520; % 1:lfSize(2);
+xRange = 1:lfSize(1); % 600:700; 
+yRange = 1:lfSize(2); % 420:520;
 
 % get shifted lf matrix, deltaX and daltaY, and refocused image
 [refocus,shiftedLightField, deltaMat] = lfShiftSum(lightField,shiftMat,depth); 
