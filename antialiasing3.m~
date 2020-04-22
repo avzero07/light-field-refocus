@@ -1,7 +1,7 @@
-function antialiasedRefocus = antialiasing3(shiftedLightField,deltaMat,disparityMat,xRange,yRange)
+function antialiasedRefocus = antialiasing3(shiftedLightField,lightField,center,deltaMat,disparityMat,xRange,yRange)
 % shift and sum + local interpolation to obtain the antialiased refocused image
 
-    [length,width,~,numViews] = size(shiftedLightField);
+    [length,width,~,numViews] = size(lightField);
      m = sqrt(numViews);
      
 %    interpolation threshold, > T1 do interpolation
@@ -34,6 +34,7 @@ function antialiasedRefocus = antialiasing3(shiftedLightField,deltaMat,disparity
 
 %           Y : left--right   minus relative shifting in y direction
             disY = dis_shift - (deltaMat(i+1,j+1,1) - deltaMat(i,j,1)); 
+        
 %           X : up--down      minus relative shifting in x direction
             disX = dis_shift - (deltaMat(i+1,j+1,2) - deltaMat(i,j,2)); 
              
@@ -42,8 +43,8 @@ function antialiasedRefocus = antialiasing3(shiftedLightField,deltaMat,disparity
 %           shift as view (i+1,j+1) does 
             dis_shift_next = imtranslate(dis_ori_next,[deltaMat(i+1,j+1,1),deltaMat(i+1,j+1,2)]);
             
-%             intenMat = ones(length,width);
-%             dispMat = ones(length,width);
+% %             intenMat = ones(length,width);
+% %             dispMat = ones(length,width);
             for x = xRange 
                 for y = yRange
 %                   pixel (x,y) in shifted view (i,j)

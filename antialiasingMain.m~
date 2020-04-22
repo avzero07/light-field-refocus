@@ -29,15 +29,24 @@ lightField = genLfSequence("./data/LightFieldRefocusingProject/TestSequence/", "
 depth = 4;
 center = 6;
 
-focalLength = [2354.048,2339.371,2346.855,2347.432;
-               2343.521,2340.136,2345.382,2353.755;
-               2344.436,2342.490,2351.322,2355.210;
-               2341.483,2347.073,2344.877,2342.375]; % pixels
+focalLength = [2354.048,2339.371,2346.855,2347432
+2.343521
+2.340136
+2.345382
+2.353755
+2.344436
+2.342490
+2.351322
+2.355210
+2.341483
+2.347073
+2.344877
+2.342375; % pixels
 cameraDis = 0.07; % meter
 
 lfSize = size(lightField);
-xRange = 600:700; % 1:lfSize(1); 
-yRange = 420:520; % 1:lfSize(2);
+xRange = 1:lfSize(1); % 600:700; 
+yRange = 1:lfSize(2); % 420:520;
 
 % get shifted lf matrix, deltaX and daltaY, and refocused image
 [refocus,shiftedLightField, deltaMat] = lfShiftSum(lightField,shiftMat,depth); 
@@ -46,7 +55,7 @@ yRange = 420:520; % 1:lfSize(2);
 %% Based on the central depthmap
 
 load ./depthmap/depthMaps59_11.mat
-disparity = cameraDis*focalLength(2,2)./depthMapMat;
+disparity = cameraDis*focalLength./depthMapMat;
 
 % shift and sum + local interpolation
 antiRefo2 = antialiasing2(shiftedLightField,lightField,center,deltaMat,disparity,xRange,yRange);
@@ -61,13 +70,13 @@ index = 1;
 for i=0:3
     for j=0:3
         path = folder+i+j+".mat";
-        load(char(path),'depthMapMat');
-        disparityMat(:,:,index) = cameraDis*focalLength(i+1,j+1)./depthMapMat;
+        depthmap = load(char(path),'depthMapMat');
+        disparityMat(:,:,index) = cameraDis*focalLength./depthMapMat;
         index = index + 1;
     end
 end
 
-antiRefo3 = antialiasing3(shiftedLightField,deltaMat,disparityMat,xRange,yRange);
+antiRefo3 = antialiasing3(shiftedLightField,lightField,center,deltaMat,disparityMat,xRange,yRange);
 
 %% Show images
 
