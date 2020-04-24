@@ -8,7 +8,7 @@ The sub-package also contains some sample data and a demo script to illustrate h
 these functions may be used to perform the antialiasing in light field refocusing.
 
 -------------------------
-Function of Antialiasing
+Functions of Antialiasing
 -------------------------
 
 There are 4 function files. Please refer to each file for detailed comments 
@@ -37,8 +37,8 @@ Sample Data of Antialiasing
 
 The directory './Sample-Data/' stores some sample data used in the demo script
 to generate the results.
-- './Sample Data/Light Field' contains a frame sequence of light field sub-aperture 
+- 'Sample Data/Light Field' contains a frame sequence of light field sub-aperture 
   images that are used as the inpus in the demo script.
-- './Sample Data/Depth Map' contains the corresponding depth maps of each image 
+- 'Sample Data/Depth Map' contains the corresponding depth maps of each image 
   generated from the 'Depth Estimation' sub-package.
-- './Sample Data/Output' is the directory saving the output images from the demo script.
+- 'Sample Data/Output' is the directory saving the output images from the demo script.
