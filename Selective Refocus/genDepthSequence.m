@@ -1,6 +1,4 @@
 %% genDepthSequence Function
-% @author   - Akshay Viswakumar
-% @email    - akshay.viswakumar@gmail.com
 % @version  - v1.0
 % @date     - 07-Apr-2020
 %% Changelog

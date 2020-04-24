@@ -1,6 +1,4 @@
 %% shiftSumRefocus Function
-% @author   - Akshay Viswakumar
-% @email    - akshay.viswakumar@gmail.com
 % @version  - v1.0
 % @date     - 19-Feb-2020
 %% Changelog

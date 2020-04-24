@@ -1,6 +1,4 @@
 %% genImSequence Function
-% @author   - Akshay Viswakumar
-% @email    - akshay.viswakumar@gmail.com
 % @version  - v1.0
 % @date     - 20-Feb-2020
 %% Changelog
@@ -45,7 +43,7 @@ function [imSequence] = genImSequence(path,canonicalName,frames,view,format)
 % NOTE: This function is hard-coded for RGB images of size
 % 1088x2048. This is sufficient for images from the Technicolor dataset
 % that was used for this project. To extend usage to images from another
-% dataset please make sure to update the dimensions (line 61) appropriately. 
+% dataset please make sure to update the dimensions (line 59) appropriately. 
 
 % Format View Number in Filename
     sView = "";

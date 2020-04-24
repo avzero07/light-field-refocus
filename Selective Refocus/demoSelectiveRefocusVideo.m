@@ -1,6 +1,4 @@
 %% Demo Script to Selectively Refocus/Blur an Image and Generate Video
-% @author   - Akshay Viswakumar
-% @email    - akshay.viswakumar@gmail.com
 % @version  - v1.0
 % @date     - 07-Apr-2020
 %% Changelog
@@ -16,7 +14,7 @@
 % < Required Inputs >
 % 1. Image Frames from the technicolor lightField Dataset
 % 2. Corresponding Depthmaps (can be generated using the depthmap generation code from this pckage)
-% 3. [Optional: Read line 64] CSV File containing refocusRange for different frames. ('refocusPlan.csv' is used here)
+% 3. [Optional: Read line 62] CSV File containing refocusRange for different frames. ('refocusPlan.csv' is used here)
 %
 %
 % Sample images (base view 5 [central view (s,t)=(1,1)]) and corresponding 
@@ -38,8 +36,8 @@
 % images and corresponding depthmaps to the appropriate input folders. Also
 % modify the following lines
 %
-% 1. line 54 to indicate the number of frames that need to be processed.
-% 2. line 53 to indicate the appropriate base view.
+% 1. line 52 to indicate the number of frames that need to be processed.
+% 2. line 51 to indicate the appropriate base view.
 
 %% Initialize Workspace
 clc;
@@ -63,8 +61,8 @@ refocusPlan = readmatrix('refocusPlan.csv');        % CSV File specifies 'focusR
 
 % NOTE: The CSV file is necessary only if the user intends for different
 % frames to be refocused differently. If the intention is to have the same
-% range of depths in focus across all frames then please comment line 87,
-% uncomment line 88 and specify the refocusRange of choice in line 88 ([0 20] 
+% range of depths in focus across all frames then please comment line 85,
+% uncomment line 86 and specify the refocusRange of choice in line 86 ([0 20] 
 % is inserted as a placeholder).
 
 %% Read Image Sequence
@@ -98,9 +96,9 @@ tstampString = string(tstamp(1))+string(tstamp(2))+string(tstamp(3))+string(tsta
 outputVideo = VideoWriter(fullfile(opFolder,'Scene-1-uncomp-'+tstampString+'.avi'),'Uncompressed AVI');
 %outputVideo = VideoWriter(fullfile(opFolder,'Scene-1-comp-'+tstampString+'.avi'));
 
-% NOTE: Leave one of line 57 or line 58 uncommented. 
-%       Line 57: Force MATLAB to generate an Uncompressed Output
-%       Line 58: Generate compressed Output
+% NOTE: Leave one of line 96 or line 97 uncommented. 
+%       Line 96: Force MATLAB to generate an Uncompressed Output
+%       Line 97: Generate compressed Output
 
 outputVideo.FrameRate = 30; % Specfies FrameRate for OutputVideo
 

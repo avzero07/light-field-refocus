@@ -1,6 +1,4 @@
 %% Demo Script to Illustrate Selective Refocus
-% @author   - Akshay Viswakumar
-% @email    - akshay.viswakumar@gmail.com
 % @version  - v1.0
 % @date     - 03-Apr-2020
 %% Changelog
@@ -20,7 +18,7 @@
 % Three sample images and their depthmaps have been provided along with this 
 % package in the 'Sample-Data/Sample-SelectiveBlurring' folder. The script
 % is designed to perform selective refocus at certain depth ranges (refer 
-% lines 64 onward in this script) to focus on certain objects in the scene.
+% lines 60 onward in this script) to focus on certain objects in the scene.
 % Outputs are generated in different figures and are titled appropriately.
 %
 % NOTE: Only 3 images and corresponding depthmaps are included in the
@@ -46,8 +44,8 @@ depthMap = imread(inputPath+"painter-depth.png");    % Load Corresponding Depth 
 
 % NOTE: Two other image frames ('painter-02.png' and 'painter-03.png') and 
 % their corresponding depth maps ('painter-02.png' and 'painter-03.png') are 
-% also available as part of this package. Replace the filenames in line 44
-% and line 45 to check refocused outputs using these other images. Please
+% also available as part of this package. Replace the filenames in line 42
+% and line 43 to check refocused outputs using these other images. Please
 % make sure that images and depthmaps are not mismatched.
 
 % Display Image

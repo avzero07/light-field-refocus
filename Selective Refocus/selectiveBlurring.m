@@ -1,6 +1,4 @@
 %% selectiveBlurring Function
-% @author   - Akshay Viswakumar
-% @email    - akshay.viswakumar@gmail.com
 % @version  - v1.0
 % @date     - 30-Mar-2020
 %% Changelog
@@ -69,7 +67,7 @@ uLimit = mode(mode(imgDepth))+30;
 % was close to the mode of the intensity value of the depthmap image. Good 
 % outputs were obtained by setting the upper limit to 30 greater than the mode.
 %
-% For different scenes it may be necessary to tweak line 64 if the output
+% For different scenes it may be necessary to tweak line 62 if the output
 % is not satisfactory.
 
 bins = linspace(0,double(uLimit),double(numLevels));
@@ -91,7 +89,7 @@ end
 % Initialize 'chooseFilt'
 chooseFilt = zeros(1,numLevels); % Initialize with all 0
 
-% This section (line 109 to 126) constitute the logic for assigning filter-levels 
+% This section (line 107 to 124) constitute the logic for assigning filter-levels 
 % to each bin. The mapping is stored in 'chooseFilt'. The idea is that all bins
 % containing levels within the 'focusRange' are assigned a filter-level of 1. 
 % Bins outside the focusRange are assigned a higher filter-level depending 
@@ -127,7 +125,7 @@ end
 
 %% Generate Images Filtered at Each Level
 
-% This section (lines 152 and 153) generates a list of gaussian filter-sizes ('filtSize')
+% This section (lines 150 and 151) generates a list of gaussian filter-sizes ('filtSize')
 % from 0.5 (no filtering) to upperFilt. There are as many filter levels as
 % there are bins.
 %
@@ -139,7 +137,7 @@ end
 % NOTE: Spacing between consecutive filter levels is currently linear. This
 % can be tweaked/modified to vary the difference in blurring across levels.
 % For instance, changing to a logarithmic or exponential spacing can have
-% different results. To make modifications, replace line 153 with another
+% different results. To make modifications, replace line 151 with another
 % line indicating the spacing of choice.
 %
 % --------

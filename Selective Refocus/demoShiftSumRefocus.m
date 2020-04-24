@@ -1,7 +1,4 @@
 %% Demo Script to Illustrate Shift Sum Refocus
-% Main Script
-% @author   - Akshay Viswakumar
-% @email    - akshay.viswakumar@gmail.com
 % @version  - v1.0
 % @date     - 19-Feb-2020
 %% Changelog
@@ -14,7 +11,7 @@
 % package can be used to perform shift-sum-refocus on sub-aperture images
 % from the technicolor lightField dataset. The script will perform
 % shift-sum refocus at 6 pre-determined depth levels and diplay the
-% outputs. To modify this, please modify line 68.
+% outputs. To modify this, please modify line 73.
 %
 % < Required Input >
 % 1. Sub Aperture Image Frames from the technicolor lightField Dataset
