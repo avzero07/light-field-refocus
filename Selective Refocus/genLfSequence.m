@@ -21,7 +21,7 @@ function [lfSequence] = genLfSequence(path,canonicalName,views,frame,format)
 %   path            ---> (String) Full File System Path to Folder Containing
 %                        Images.
 %   canonicalName   ---> (String) Common Part of Frame Name
-%   views           ---> Total Number of Views to Read (1-16)
+%   views           ---> Total Number of Sub Aperture Views to Read (1-16)
 %   frame           ---> Frame of Interest from Light Field Dataset
 %   format          ---> (String) Image File Format eg: "png" , "jpg"
 %
@@ -39,7 +39,7 @@ function [lfSequence] = genLfSequence(path,canonicalName,views,frame,format)
 %   Function Output
 %   ------------------
 %  
-%   lfSequence      --->  A 4D matrix of images (Width x Height x Color Channels x Number of Views).
+%   lfSequence      --->  A 4D matrix of images (Width x Height x Color Channels x Number of Sub-Aperture Views).
 %
 % NOTE: This function is hard-coded for RGB images of size
 % 1088x2048. This is sufficient for images from the Technicolor dataset

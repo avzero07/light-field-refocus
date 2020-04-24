@@ -27,7 +27,7 @@ function [imSequence] = genImSequence(path,canonicalName,frames,view,format)
 %   Note: The file naming is specfiic to the technicolor light-field
 %   dataset.
 %
-%   File Nameing Example
+%   File Naming Example
 %   --------
 %   Filename      = "Painter_pr_00013_05.png"
 %   canonicalName = "Painter_pr_00";
