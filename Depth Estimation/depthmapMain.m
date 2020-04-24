@@ -41,7 +41,7 @@ s = 1;%Vertical Index
 t = 1;%Horizontal Index
 
 %Define the path for saving output depth image and the image filetype
-prefix = "..\Output\depthMap_";
+prefix = ".\Sample Data\Depth Estimation Output\depthMap_";
 suffix = ".png";
 
 %Set how many view there exists for a single frame
@@ -58,7 +58,7 @@ for f = 1:frameLen
     frameOfInterest = frameSeq(f)-1;%Offset by 1 to meet dataset's naming convention
     refIdx = 4*s+t+1;%Calculate the index of reference view
     %Get all the grayscale version of views for current frame
-    lightFieldGray = genLfSequenceGray("..\Sample Data\Depth Estimation Input\", "Painter_pr_00",views,frameOfInterest,'png');
+    lightFieldGray = genLfSequenceGray(".\Sample Data\Depth Estimation Input\", "Painter_pr_00",views,frameOfInterest,'png');
     %Generate the shiftmatrix according to current reference view setting
     newshiftMat = changeBaseView(s,t);
     tic
@@ -80,4 +80,4 @@ for f = 1:frameLen
     frameOfInterest
 end
 %Save the depthmap matrix for all selected frames
-save("..\Output\depthMaps59.mat",'depthMapMat','-v7.3');
+save(".\Sample Data\Depth Estimation Output\depthMaps59.mat",'depthMapMat','-v7.3');
