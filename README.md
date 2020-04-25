@@ -1,4 +1,4 @@
-# Team : light-field-refocusing
+# Team : Light Field Refocusing
 
 ## Team Members
 
