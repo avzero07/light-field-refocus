@@ -45,3 +45,29 @@ The codebase has been logically segmented into the following sub-packages so tha
 3. Selective Refocus
 
 Targeted README files have been included in each of the following sub-packages for the user's benefit.
+
+----------------------------------------
+# Possible Enhancements and Future Work
+----------------------------------------
+
+### Optimize Algorithms
+
+1. Depth estimation using multi-resolution correspondence matching is quite slow since since the algorithm needs to process 16 sub-aperture images to generate a depth-map for one reference view. It will be worthwhile to make modifications to the algorithm in order to take advantage of parallel processing and GPU computing to speed up overall computation.
+    
+2. elective blurring currently works by creating filtered versions of the input image which are then used as a look-up table when generating the final output. The algorithm can slow down when there are a large number of depth levels. A way of optimizing this would be to run a raster scan over the image and perform localized filtering at each pixel. The benefit of this approach is that the overall algorithm can then be parallelized over several  CPU cores for faster processing. It may also be possible to leverage a GPU to further improve performance.
+
+### Enhance Depth-maps
+
+The depth-maps generated using multi-resolution correspondence matching are prone to some noise and minor artifacts. While this does not severely impact refocusing efforts, a post-filtering or post-processing stage can be incorporated to the depth estimation step to ensure that depth-maps are clean and free of any errors. Overall, improving the accuracy of the depth map will help also help improve the quality of the refocused image.
+
+### Localized Refocusing
+
+This enhancement would allow for specific objects in a scene to be in focus. The current implementation of selective blurring refocuses all pixels in depth levels that the user specifies. This may not be ideal and users may be interested in only certain object within a scene. Object recognition methods may be incorporated into the selective blurring algorithm in order to ensure that only specific regions of interest are in focus. This can be an optional feature that the end user may toggle depending on how they want the refocusing to occur. 
+
+### User Interaction
+
+The current implementation of selective blurring requires the user to set parameters (related to the depth planes which are to be focused and filter sizes) and run a script to generate the refocused output. It would definitely be worth designing a graphical user interface (GUI) component that allows users to dynamically interact with an image and refocus different regions of a scene by clicking on objects/regions of interest.
+
+### Expand Usage to Other Light Field Datasets
+
+All functions and code that have been developed are tailored to the Interdigital light field dataset that has been used for this project. The codebase will need to be modified in order to extend usage to other light field datasets. We have left enough comments and notes within the codebase to help make modifications.
