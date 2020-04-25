@@ -38,10 +38,16 @@ The "Sample Data/ Depth Estimation Input" directory is the folder for you to put
 ----------------------------
 Instruction for running the Demo Package
 ----------------------------
-Go to the "depthmapMain.m". 
+Go to the "depthmapMain.m".
+
 For demo, nothing need to be configured, just run the demo script as it is.
+
 For running the depth estimation tool with your own data, configure all the parameters under Parameter Setting section to meet the spec of your dataset and requirement.
+
 The 'for' loop that loops through selected frames supports parallel computing, however it is heavy on memory consumption. Use it with caution, the more worker you use, the more memory it consumes.
+
 Restriction:
+
 1.The resolution of the image has been hard coded in multiple places inside the code, must be changed to use image with different resolution. Our hard coded resolution is 1088x2048
-2.The logic inside the changeBaseView function and genLfSequenceGray function is very specific to the Technicolor lightField Dataset, you may need to modify the logic of these two functions before they can be applied to your own dataset. Especially when your data file naming convention is different and your camera rig system is not 4 by 4. 
+
+2.The logic inside the changeBaseView function and genLfSequenceGray function is very specific to the Technicolor lightField Dataset, you may need to modify the logic of these two functions before they can be applied to your own dataset. Especially when your data file naming convention is different and your camera rig system is not 4 by 4.
