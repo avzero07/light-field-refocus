@@ -12,6 +12,9 @@
 %  @Citation: The algorithm implemented here is from the following paper: 
 %  Depth-based refocusing for reducing directional aliasing artifacts
 %  Lee,S. et al.,Optics express, vol.24, no.24, pp.28 065?28 079, 2016.
+% 
+%  Note: this script might take around 15 mins that depends on your
+%  computer configuretion.
 
 clc;
 close all;
