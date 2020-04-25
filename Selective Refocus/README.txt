@@ -4,9 +4,9 @@
 
 This sub-package contains all functions developed, as part of the overall project, to perform selective refocusing. The package also contains some demo scripts to illustrate how these functions may be used to perform selective refocus.
 
-----------------------------
-Description of Sub Package
-----------------------------
+---------------------------------------------
+Description of Selective Refocus Sub Package
+---------------------------------------------
 
 The sub-package consists of Functions, Scripts and some Sample Data
 
@@ -27,8 +27,8 @@ There are 3 demo scripts to demonstrate how the functions may be used together. 
 
 There is an additional CSV file 'refocusPlan.csv' that is included in this sub-package. Note that this file is used in 'demoSelectiveRefocusVideo.m'. Please refer to the script to get more information about this file.
 
-----------------------------
-Other Contents of Demo Package
-----------------------------
+------------------------------------------------
+Other Contents of Selective Refocus Sub Package
+------------------------------------------------
 
 Note that the Sample-Data/ directory contains some images (subset of the Technicolor lightField Dataset) that are used in the Demo scripts to demonstrate results. Please refrain from making modificatios to the directory or its contents as it may impact the demo scripts.
