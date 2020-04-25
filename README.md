@@ -26,7 +26,7 @@ https://www.mathworks.com/support/requirements/previous-releases.html
 	- Computer Vision and Image Processing Toolbox
 	- Parallel Computing Toolbox
 	
-NOTE: This package should run fine on all newer releases of MATLAB (greater than r2019b). That said, this Demo package has not been tested on other versions of MATLAB so we cannot guarantee what the user experience might exactly be in other versions of MATLAB.
+NOTE: This package should run fine on all newer releases of MATLAB (greater than r2019b). That said, this Demo package has not been tested on other versions of MATLAB so we cannot guarantee the same user experience in other versions of MATLAB.
 
 ## Recommended Requirements
 
