@@ -30,8 +30,6 @@ NOTE: This package should run fine on all newer releases of MATLAB (greater than
 
 ## Recommended Requirements
 
-1. Hardware Requirements
-
 - While a GPU is not necessary, it will be useful to have one since many MATLAB functions and packages are optimized internally to run better in the presence of a GPU.
 
 - Our codebase utilizes several in-built MATLAB functions that are optimized to take advantage of the parallel computing and GPUs available in modern systems. To achieve the best performance please use a modern computer system with a processor having 4 cores or more as well as a GPU.
