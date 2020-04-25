@@ -43,7 +43,7 @@ img = imread(inputPath+"painter.png");               % Load Image
 depthMap = imread(inputPath+"painter-depth.png");    % Load Corresponding Depth Map
 
 % NOTE: Two other image frames ('painter-02.png' and 'painter-03.png') and 
-% their corresponding depth maps ('painter-02.png' and 'painter-03.png') are 
+% their corresponding depth maps ('painter-02-depth.png' and 'painter-03-depth.png') are 
 % also available as part of this package. Replace the filenames in line 42
 % and line 43 to check refocused outputs using these other images. Please
 % make sure that images and depthmaps are not mismatched.
