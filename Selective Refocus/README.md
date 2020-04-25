@@ -1,4 +1,4 @@
-# Team: Light Field Refocusing Project
+# Light Field Refocusing Project
 
 ## Selective Refocus Sub Package
 
