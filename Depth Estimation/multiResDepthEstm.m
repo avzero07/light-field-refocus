@@ -1,4 +1,4 @@
-function depthmap = multiResDepthEstm(lightFieldGray,refIndex,shiftMat,zmin,zmax,depthRes,K,M)
+function depthmap = multiResDepthEstm(lightFieldGray,refIndex,shiftMat,zmin,zmax,depthRes,K,M,z0,z1,arr_wid)
 %MULTIRESDEPTHESTM takes in an matrix of grayscale light fields and generates depthmap
 %   of the chosen reference view.
 %
@@ -15,6 +15,10 @@ function depthmap = multiResDepthEstm(lightFieldGray,refIndex,shiftMat,zmin,zmax
 %   K               -- (int)number of multiresolution
 %   M               -- (int)subresolution of depth at higher resolution
 %                       scales
+%   z0              -- (float)the reference depth of light field
+%   z1              -- (float)the chosen depth of light field
+%   arr_wid         -- (int)the width of the camera array, 
+%                       controls the looping through views 
 %   ------------------
 %   Function Output
 %   ------------------
@@ -26,7 +30,7 @@ function depthmap = multiResDepthEstm(lightFieldGray,refIndex,shiftMat,zmin,zmax
 %   Shrink the image by a factor of 2^K -- get the coarsest depthmap
     IK = imresize(lightFieldGray, 1/2^K,'method','bilinear');
 %   Generate the depthmap at the coarest scale    
-    ZK = getCoarseDepthmap(IK, refIndex, shiftMat/(2^K), zmin, zmax, depthRes);
+    ZK = getCoarseDepthmap(IK, refIndex, shiftMat/(2^K), zmin, zmax, depthRes, z0, z1, arr_wid);
 %   delta z at the coarsest scale 
     deltaZK = (zmax - zmin)/depthRes;
 
@@ -43,7 +47,7 @@ function depthmap = multiResDepthEstm(lightFieldGray,refIndex,shiftMat,zmin,zmax
 %   Shrink the image by a factor of 2^k -- get the higher resolution images
         IK_1 = imresize(lightFieldGray, 1/2^k,'method','bilinear');
 %   Upsample the depthmap generated from previous scale      
-        ZK_1 = getRefinedDepthMap(IK_1,ZK,deltaZK,refIndex,shiftMat/(2^k),zmin,M);
+        ZK_1 = getRefinedDepthMap(IK_1,ZK,deltaZK,refIndex,shiftMat/(2^k),zmin,M,z0,z1,arr_wid);
         ZK = ZK_1;
 %   delta z for the other scales -- M = 2
         deltaZK = deltaZK/M;

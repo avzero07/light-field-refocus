@@ -1,6 +1,6 @@
 
 %% Implementation
-function [znccForZ] = computeZNCC(IhatMat,shiftMat,refIndex,z)
+function [znccForZ] = computeZNCC(IhatMat,shiftMat,refIndex,z,z0,z1,arr_wid)
 %COMPUTEZNCC Finds the ZNCC of the whole image at Depth z
 %
 %
@@ -14,6 +14,10 @@ function [znccForZ] = computeZNCC(IhatMat,shiftMat,refIndex,z)
 %   shiftMat        -- (double) a matrix of relative shift disparity between 
 %                       views, downscaled with image resolution reduction
 %   z               -- (double)depth under estimation
+%   z0              -- (float)the reference depth of light field
+%   z1              -- (float)the chosen depth of light field
+%   arr_wid         -- (int)the width of the camera array, 
+%                       controls the looping through views 
 %   ------------------
 %   Function Output
 %   ------------------
@@ -25,10 +29,7 @@ function [znccForZ] = computeZNCC(IhatMat,shiftMat,refIndex,z)
 znccForZ = zeros(width,length); 
 
 
-% For Refocus
-z0 = 100;   % Pre-Defined
-z1 = 1.63;  % Pre-Defined
-
+% Calculate the coefficent that controls the view shifting
 d = ((1/z)-(1/z0))/((1/z1)-(1/z0));
 
 %Get Ihat values for the reference view
@@ -38,8 +39,8 @@ refIhat2 = permute(refIhat,[3,4,1,2]); %neighbor_i,neighbor_j,imageRow,imageColo
 
 %% Loop Through Light Field
 index = 0;
-for i=1:4
-    for j=1:4
+for i=1:arr_wid
+    for j=1:arr_wid
         index = index+1;
         % Skip when At RefIndex
         if(index==refIndex)
@@ -71,8 +72,7 @@ for i=1:4
     end
 end
 
-% Divide by 15(2n+1)^2 to get average
-znccForZ = znccForZ/(15*(3^2));
-
+% Divide by 15(2n+1)^2 to get average of cross correlation
+znccForZ = znccForZ/(double(arr_wid^2-1)*(3^2));
 end
 

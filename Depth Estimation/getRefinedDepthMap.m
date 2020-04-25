@@ -1,4 +1,4 @@
-function ZK_1 = getRefinedDepthMap(lightFieldGray,prevZ,delz,refIndex,shiftMat,zmin,M)
+function ZK_1 = getRefinedDepthMap(lightFieldGray,prevZ,delz,refIndex,shiftMat,zmin,M,z0,z1,arr_wid)
 %GETREFINEDDEPTHMAP takes in an array of grayscale light fields of certain
 %resolution and generates depthmap for that resolution
 %
@@ -18,6 +18,10 @@ function ZK_1 = getRefinedDepthMap(lightFieldGray,prevZ,delz,refIndex,shiftMat,z
 %                       views, downscaled with image resolution reduction
 %   zmin            -- (float) minimum depth
 %   M               -- (int)depth map subresolution
+%   z0              -- (float)the reference depth of light field
+%   z1              -- (float)the chosen depth of light field
+%   arr_wid         -- (int)the width of the camera array, 
+%                       controls the looping through views
 %   ------------------
 %   Function Output
 %   ------------------
@@ -28,14 +32,11 @@ function ZK_1 = getRefinedDepthMap(lightFieldGray,prevZ,delz,refIndex,shiftMat,z
     
     ZK_1 = zeros(width,length);
     
-    % For calculating shifting values
-    z0 = 100;   % Pre-Defined
-    z1 = 1.63;  % Pre-Defined
     IhatMat = zeros(3,3,width,length,numViews);
     %% Loop Through Light Field
     index = 0;
-    for i=1:4
-        for j=1:4
+    for i=1:arr_wid
+        for j=1:arr_wid
             index = index+1;
 
             img = double(lightFieldGray(:,:,index));
@@ -89,7 +90,7 @@ function ZK_1 = getRefinedDepthMap(lightFieldGray,prevZ,delz,refIndex,shiftMat,z
                 % Calculate the shifting coefficient from depth z
                 d = ((1/z)-(1/z0))/((1/z1)-(1/z0));
                 % Compute the local ZNCC for current pixel
-                znccList(l) = computeZNCCLocal(IhatMat,shiftMat,refIndex,d,x,y);
+                znccList(l) = computeZNCCLocal(IhatMat,shiftMat,refIndex,d,x,y,arr_wid);
             end
 
             %% Find maxZ

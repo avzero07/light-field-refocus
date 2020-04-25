@@ -15,8 +15,13 @@ clear variables;
 
               
 
-%% Get depthmap of the reference view -- multiresolution stratege
+%% Get depthmap of the reference view -- multiresolution strategy
 %%% Parameter Setting
+%Define the reference depth z0 and the chosen depth z1, they are used for
+%view shifting amount calculation.
+z0 = 100;
+z1 = 1.63;
+
 %Define the initial depth range for your light field image sequence
 zmin = 2; 
 zmax = 10;
@@ -46,24 +51,29 @@ suffix = ".png";
 
 %Set how many view there exists for a single frame
 views = 16;
+arr_width = int8(sqrt(views)); 
 
 %%%%%%%%%Depth estimation algorithm start Here%%%%%%%%%
+%Initialization
 frame_num = e_frame-s_frame+1;
 frameSeq = linspace(s_frame, e_frame, frame_num);%Generate frame index sequence
 frameLen = length(frameSeq);
 
-depthMapMat = zeros(1088,2048,frameLen);%Matrix for saving depthmaps
+%Matrix for saving depthmaps, it should match the resolution of your image
+depthMapMat = zeros(1088,2048,frameLen);
+
 
 for f = 1:frameLen
     frameOfInterest = frameSeq(f)-1;%Offset by 1 to meet dataset's naming convention
-    refIdx = 4*s+t+1;%Calculate the index of reference view
+    %Calculate the index of reference view 
+    refIdx = arr_width*s+t+1;
     %Get all the grayscale version of views for current frame
     lightFieldGray = genLfSequenceGray(".\Sample Data\Depth Estimation Input\", "Painter_pr_00",views,frameOfInterest,'png');
     %Generate the shiftmatrix according to current reference view setting
     newshiftMat = changeBaseView(s,t);
     tic
     %Run multiRes function to generate depthmap
-    depthMap = multiResDepthEstm(lightFieldGray,refIdx,newshiftMat,zmin,zmax,depthRes,K,M);
+    depthMap = multiResDepthEstm(lightFieldGray, refIdx, newshiftMat, zmin, zmax, depthRes, K, M, z0, z1, arr_width);
     toc
     %The commented code is used to plot the generated depthmap
     %{

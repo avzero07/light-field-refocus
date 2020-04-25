@@ -1,4 +1,4 @@
-function [znccForZ] = computeZNCCLocal(IhatMat,shiftMat,refIndex,d,x,y)
+function [znccForZ] = computeZNCCLocal(IhatMat,shiftMat,refIndex,d,x,y,arr_wid)
 %COMPUTEZNCCLocal Finds the local ZNCC of the a specific pixel at Depth z
 %
 %   ------------------
@@ -13,6 +13,8 @@ function [znccForZ] = computeZNCCLocal(IhatMat,shiftMat,refIndex,d,x,y)
 %                       amount, decided by depth z
 %   x               -- (int) row index of the pixel under evaluation
 %   y               -- (int) colomn index of the pixel under evaluation
+%   arr_wid         -- (int)the width of the camera array, 
+%                       controls the looping through views
 %   ------------------
 %   Function Output
 %   ------------------
@@ -29,8 +31,8 @@ index = 0;
 ZNCC = zeros(3,3);
 
 %% Loop through light field views
-for i=1:1:4
-    for j=1:1:4
+for i=1:1:arr_wid
+    for j=1:1:arr_wid
         index = index + 1;
         % Skip when At RefIndex
         if(index==refIndex)
@@ -53,7 +55,7 @@ for i=1:1:4
     end
 end
 ZNCC = sum(sum(ZNCC));
-% Divide by 15(2n+1)^2 to get average
-znccForZ = ZNCC/(15*(3^2));
+% Divide by 15*(2n+1)^2 to get average of cross correlation
+znccForZ = ZNCC/(double(arr_wid^2-1)*(3^2));
 end
 

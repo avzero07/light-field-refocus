@@ -1,4 +1,4 @@
-function depthmap = getCoarseDepthmap(lightFieldGray,refIndex,shiftMat,zmin,zmax,depthRes)
+function depthmap = getCoarseDepthmap(lightFieldGray,refIndex,shiftMat,zmin,zmax,depthRes,z0,z1,arr_wid)
 %GETCOARSEDEPTHMAP takes in an array of lowest resolution grayscale light 
 %fields and generates depthmap for the coarstest scale
 %
@@ -13,6 +13,10 @@ function depthmap = getCoarseDepthmap(lightFieldGray,refIndex,shiftMat,zmin,zmax
 %   zmin            -- (float) minimum depth
 %   zmax            -- (float) maximum depth
 %   depthRes        -- (int)depth map resolution
+%   z0              -- (float)the reference depth of light field
+%   z1              -- (float)the chosen depth of light field
+%   arr_wid         -- (int)the width of the camera array, 
+%                       controls the looping through views 
 %   ------------------
 %   Function Output
 %   ------------------
@@ -28,8 +32,8 @@ function depthmap = getCoarseDepthmap(lightFieldGray,refIndex,shiftMat,zmin,zmax
     
 %%  Loop Through Light Field Views to Calculate Ihat Values for Each View
     index = 0;
-    for i=1:4
-        for j=1:4
+    for i=1:arr_wid
+        for j=1:arr_wid
             index = index+1;
             img = double(lightFieldGray(:,:,index));
             % Pad zero around the images to solve boundary issues
@@ -61,7 +65,7 @@ function depthmap = getCoarseDepthmap(lightFieldGray,refIndex,shiftMat,zmin,zmax
     for i =1:depthRes+1
         z = depthSeq(i);
 %       compute ZNCC for each sampled depth z
-        ZNCCs(:,:,i) = computeZNCC(IhatMat, shiftMat, refIndex, z);
+        ZNCCs(:,:,i) = computeZNCC(IhatMat, shiftMat, refIndex, z, z0, z1, arr_wid);
     end
 %   for each pixel, find the index of the maximum in ZNCCs
     [~,index] = max(ZNCCs,[],3);%min(ZNCCs,[],3);
