@@ -16,7 +16,7 @@ Zhihui Lu		- 85910719
 
 ## Minimum Requirements
 
-All code was developed using the MATLAB version r2019b. All code in this package will run on any system capable of running MATLAB r2019b. Minimum requirements for running MATLAB r2019b are indicated on Mathworks' webpage linked below.
+All code was developed using the MATLAB version r2019b. All code in this package will run on any system capable of running MATLAB r2019b. System requirements for running MATLAB r2019b are indicated on Mathworks' webpage linked below.
 
 https://www.mathworks.com/support/requirements/previous-releases.html
 
