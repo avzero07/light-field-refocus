@@ -5,9 +5,10 @@
 % @Citation: The algorithm implemented here is from the following paper: 
 % Dataset and Pipeline for Multi-View Light-Field Video. 
 % N. Sabater et al. CVPR Workshops, 2017.
-
-
-
+%
+% @Note: The demo takes a long time to run depending on your hardware
+% configuration. Please wait patiently till the run completes. It took
+% approximately 15-30 minutes to run.
 
 clc;
 close all;
