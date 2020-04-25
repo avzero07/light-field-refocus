@@ -79,13 +79,12 @@ for f = 1:frameLen
     %Run multiRes function to generate depthmap
     depthMap = multiResDepthEstm(lightFieldGray, refIdx, newshiftMat, zmin, zmax, depthRes, K, M, z0, z1, arr_width);
     toc
-    %The commented code is used to plot the generated depthmap
-    %{
+    %Plot depth map to a grayscale image.
     figure 
     imshow(mat2gray(depthMap));
     colormap jet;
     title(sprintf('depthMap for frame %d',frameOfInterest));
-    %}
+    %Comment out the above codes if you don't want depth maps to be ploted.
     depthMapMat(:,:,f) = depthMap;
     %Conver depthmap matrix into a grayscale Image and save it
     depthMapConv = uint8(255*mat2gray(depthMap));
