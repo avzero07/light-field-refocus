@@ -4,7 +4,7 @@
 
 Akshay Viswakumar	- 32971665
 
-Jeffrey Li		- 59322511
+Jeffery Li		- 59322511
 
 Yonghan Zhou		- 93506160
 
