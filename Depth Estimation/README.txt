@@ -24,7 +24,7 @@ There are 7 function files. Please refer to each file for detailed comments abou
 There are 1 demo scripts to demonstrate how the functions may be used together. These scripts can be executed as is on MATLAB. Please make sure that the current working directory is set to this directory to ensure all relative paths are visible. Please refer to each file for detailed comments about their purpose and design.
 
 1. depthmapMain.m
-
+Note!!!: The time required for running this demo varies based on the hardware configuration of the platform where you run it. When running it on a high-end CPU with 32GB of RAM, it took 15 mins to complete the run. Please be patient if the run lasts for long!!!!
 
 ----------------------------
 Other Contents of Demo Package
