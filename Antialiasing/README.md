@@ -29,7 +29,7 @@ current working directory is set to this directory to ensure all relative
 paths are visible. Please refer to each file for detailed comments about 
 their purpose and design.
 
-Note: this script might take around 15 mins that depends on your computer configuretion.
+Note: this script might take around 15 mins that depends on your computer configuration.
 
 1. antialiasingMain.m
 
