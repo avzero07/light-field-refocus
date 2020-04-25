@@ -1,4 +1,4 @@
-# Light Field Refocus Project
+# Light Field Refocusing Project
 
 ## Multi-resolution Correspondence-Matching Depth Estimation Sub Package
 
