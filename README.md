@@ -11,7 +11,7 @@ Yonghan Zhou		- 93506160
 Zhihui Lu		- 85910719
 
 --------------------
-System Requirements
+# System Requirements
 --------------------
 
 ## Minimum Requirements
@@ -37,7 +37,7 @@ NOTE: This package should run fine on all newer releases of MATLAB (greater than
 - Our codebase utilizes several in-built MATLAB functions that are optimized to take advantage of the parallel computing and GPUs available in modern systems. To achieve the best performance please use a modern computer system with a processor having 4 cores or more as well as a GPU.
 
 --------------------
-More Instructions
+# More Instructions
 --------------------
 
 The codebase has been logically segmented into the following sub-packages so that it is better organized.
