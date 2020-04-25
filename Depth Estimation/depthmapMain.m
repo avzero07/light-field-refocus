@@ -63,10 +63,10 @@ frameLen = length(frameSeq);
 depthMapMat = zeros(1088,2048,frameLen);
 
 %Loop through selected frames to generate depth map for each frame, use
-%parfor to enable parallel computing, in the case that own one frame is
-%involved, change the 'parfor' to 'for', change your parallel preference to
+%parfor to enable parallel computing, in the case that multiple frames are
+%involved, change the 'for' to 'parfor', change your parallel preference to
 %determine how many workers you want use for paralleling
-parfor f = 1:frameLen
+for f = 1:frameLen
     frameOfInterest = frameSeq(f)-1;%Offset by 1 to meet dataset's naming convention
     %Calculate the index of reference view 
     refIdx = arr_width*s+t+1;
