@@ -82,7 +82,6 @@ for f = 1:frameLen
     %Plot depth map to a grayscale image.
     figure 
     imshow(mat2gray(depthMap));
-    colormap jet;
     title(sprintf('depthMap for frame %d',frameOfInterest));
     %Comment out the above codes if you don't want depth maps to be ploted.
     depthMapMat(:,:,f) = depthMap;
