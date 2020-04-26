@@ -54,7 +54,7 @@ Targeted README files have been included in each of the following sub-packages f
 
 - Depth estimation using multi-resolution correspondence matching is quite slow since since the algorithm needs to process 16 sub-aperture images to generate a depth-map for one reference view. It will be worthwhile to make modifications to the algorithm in order to take advantage of parallel processing and GPU computing to speed up overall computation.
 
-- Depth estimation currently uses Zero-mean Normalised Cross Correlation (ZNCC)as the metric of similarity.  However, the way itaverages the cross correlation leads to the appearance of noise at the edges of thedepth map.  It may be worth exploring other algorithms to replace ZNCC in orderto improve the overall accuracy.
+- Depth estimation currently uses Zero-mean Normalised Cross Correlation (ZNCC) as the metric of similarity.  However, the way it averages the cross correlation leads to the appearance of noise at the edges of the depth map.  It may be worth exploring other algorithms to replace ZNCC in order to try an improve the overall accuracy.
     
 - Selective blurring currently works by creating filtered versions of the input image which are then used as a look-up table when generating the final output. The algorithm can slow down when there are a large number of depth levels. A way of optimizing this would be to run a raster scan over the image and perform localized filtering at each pixel. The benefit of this approach is that the overall algorithm can then be parallelized over several  CPU cores for faster processing. It may also be possible to leverage a GPU to further improve performance.
 
